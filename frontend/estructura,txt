@@ -1,0 +1,8 @@
+frontend/
+├── src/
+│   ├── components/
+│   │   ├── LineForm.jsx
+│   │   └── Dashboard.jsx
+│   ├── store/lineStore.js
+│   ├── services/api.js
+│   └── App.jsx
