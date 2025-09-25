@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react"
-import LineCard from "../components/LineCard"
-import { useLineStore } from "../store/lineStore"
+import LineCard from "../Components/LineCard"
+import { useLineStore } from "../store/LineStore"
 import { fetchLines } from "../services/api"
 import { connectWebSocket } from "../services/socket"
 

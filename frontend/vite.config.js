@@ -8,10 +8,17 @@ export default defineConfig({
     host:'0.0.0.0',
     port: 5173,
     strictPort: true,
-    cors: true
-  },  
-    plugins: [
+    cors: true,
+    allowedHosts: [
+      '5173-jcjaramill-envasesab-8s8wybvjex8.ws-us121.gitpod.io'
+    ],
+
+  },
+
+  plugins: [
     tailwindcss(),
     react()
   ],
 })
+
+

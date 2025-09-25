@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routes import lines
 from app.websocket import socket
 from app.websocket.metrics_emitter import emitir_metricas
+from app.config import settings
 import uvicorn
 import asyncio
 
@@ -39,4 +40,4 @@ def home():
 
 # --- Mantener el servidor escuchando ---
 if __name__ == "__main__":
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8005, reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=settings.PORT, reload=True)

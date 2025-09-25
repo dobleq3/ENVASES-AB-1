@@ -1,15 +1,18 @@
 from motor.motor_asyncio import AsyncIOMotorClient
-from fastapi import Depends
+from app.config import settings
 
-client = AsyncIOMotorClient("mongodb://localhost:27019")
-db = client["lab_tracking"]
+# Conexión a MongoDB Atlas
+client = AsyncIOMotorClient(settings.MONGO_URI)
 
+# Selección de base de datos (extraída del URI: "electronica")
+db = client.get_database("electronica")
+
+# Colecciones disponibles
 def get_collection():
-    return db["lines"]
+    return db.get_collection("lines")
 
 def get_finalizados_collection():
-    return db["productos_finalizados"]
+    return db.get_collection("productos_finalizados")
 
 def get_eventos_collection():
-    return db["eventos_produccion"]
-
+    return db.get_collection("eventos_produccion")

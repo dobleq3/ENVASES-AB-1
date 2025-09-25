@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useLineStore } from "../store/lineStore"
+import { useLineStore } from "../store/LineStore"
 import { fetchLines, createLine, updateLine } from "../services/api"
 import toast from "react-hot-toast"
 
