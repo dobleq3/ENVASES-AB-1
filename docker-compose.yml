@@ -1,4 +1,4 @@
-version: "3.9"
+
 
 services:
   backend:
@@ -6,11 +6,11 @@ services:
     container_name: backend_service
     restart: always
     ports:
-      - "8005:8005"     # FastAPI expuesto en localhost:8005
+      - "8005:8005"  # FastAPI expuesto en localhost:8005
     environment:
-      - MONGO_URI=mongodb+srv://user_mongo:dobleq3@cluster0.sj5du.mongodb.net/electronica?retryWrites=true&w=majority  # conexión a Mongo Atlas
+      MONGO_URI: mongodb+srv://user_mongo:dobleq3@cluster0.sj5du.mongodb.net/electronica?retryWrites=true&w=majority  # conexión a Mongo Atlas desde .env
     volumes:
-      - backend_data:/usr/src/app/data   # volumen persistente
+      - backend_data:/usr/src/app/data
     networks:
       - app_network
 
@@ -19,11 +19,12 @@ services:
     container_name: frontend_service
     restart: always
     ports:
-      - "5173:5173"     # Vite expuesto en localhost:5173
-    environment:
-      - VITE_API_URL=http://backend:8005   # conexión al backend FastAPI dentro de la red Docker
+      - "5173:5173"  # Vite expuesto en localhost:5173
     depends_on:
       - backend
+    environment:
+      - VITE_API_URL=https://8005-jcjaramill-envasesab-8s8wybvjex8.ws-us121.gitpod.io
+      - VITE_WS_URL=wss://8005-jcjaramill-envasesab-8s8wybvjex8.ws-us121.gitpod.io
     networks:
       - app_network
 
@@ -32,13 +33,13 @@ services:
     container_name: grafana_service
     restart: always
     ports:
-      - "3000:3000"   # Grafana en localhost:3000
+      - "3000:3000"  # Grafana en localhost:3000
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
     volumes:
-      - grafana_data:/var/lib/grafana   # volumen persistente para dashboards y configuración
+      - grafana_data:/var/lib/grafana
     networks:
       - app_network
 
@@ -47,5 +48,5 @@ networks:
     driver: bridge
 
 volumes:
-  backend_data:   # volumen persistente para backend
-  grafana_data:   # volumen persistente para grafana
+  backend_data:
+  grafana_data:
