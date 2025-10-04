@@ -22,9 +22,6 @@ services:
       - "5173:5173"  # Vite expuesto en localhost:5173
     depends_on:
       - backend
-    environment:
-      - VITE_API_URL=https://8005-jcjaramill-envasesab-8s8wybvjex8.ws-us121.gitpod.io
-      - VITE_WS_URL=wss://8005-jcjaramill-envasesab-8s8wybvjex8.ws-us121.gitpod.io
     networks:
       - app_network
 
