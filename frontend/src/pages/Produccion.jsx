@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useLineStore } from "../store/LineStore"
+import { useLineStore } from "../store/lineStore"
 import { fetchLines, createLine, updateLine } from "../services/api"
 import toast from "react-hot-toast"
 
@@ -9,6 +9,7 @@ export default function Produccion() {
   const { lines, setLines } = useLineStore()
   const [localForms, setLocalForms] = useState([])
   const [dirtyForms, setDirtyForms] = useState({}) // 👈 guarda qué tarjetas fueron modificadas
+  const [loadingForms, setLoadingForms] = useState({})
 
   useEffect(() => {
     fetchLines().then((data) => {
@@ -93,6 +94,8 @@ export default function Produccion() {
   }
 
 const handleSubmit = async (index) => {
+  setLoadingForms((prev) => ({ ...prev, [index]: true })) // 👈 activa loader
+
   const line = { ...localForms[index] }
 
   // 👇 Validación para "Cambio Formato"
@@ -151,6 +154,7 @@ const handleSubmit = async (index) => {
     return updated
   })
 
+  setLoadingForms((prev) => ({ ...prev, [index]: false })) // 👈 desactiva loader
   setDirtyForms((prev) => ({ ...prev, [index]: false }))
 }
 
@@ -173,6 +177,15 @@ const statusColors = {
     const restante = minutos % 60
     return `${horas}h ${restante}min`
   }
+
+
+  const statusTransitions = {
+    "En Proceso": ["Finalizado"],
+    Finalizado: ["Cambio Formato", "En Proceso", "Sin Carga"],
+    "Cambio Formato": ["En Proceso"],
+    "Sin Carga": ["Cambio Formato", "En Proceso"],
+  }
+  
 
   return (
     <div className="p-6 bg-gray-900 min-h-screen text-white">
@@ -227,6 +240,9 @@ const statusColors = {
                     statusColors[form.status] || "bg-gray-800 text-gray-200"
                   }`}
                 >
+                  {form.status === 'En Proceso' && (
+                    <option value="Finalizado">Finalizado</option>  
+                  )}
                   <option value="Cambio Formato">Cambio Formato</option>
                   <option value="En Proceso">En Proceso</option>
                   <option value="Finalizado">Finalizado</option>
@@ -259,9 +275,16 @@ const statusColors = {
               {dirtyForms[index] && (
                 <button
                   onClick={() => handleSubmit(index)}
-                  className="mt-4 bg-blue-600 text-white px-4 py-2 rounded w-full"
+                  className={`mt-4 px-4 py-2 rounded w-full flex items-center justify-center ${
+                    loadingForms[index] ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600"
+                  } text-white`}
+                  disabled={loadingForms[index]}
                 >
-                  Actualizar
+                  {loadingForms[index] ? (
+                    <span className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></span>
+                  ) : (
+                    "Actualizar"
+                  )}
                 </button>
               )}
             </div>
