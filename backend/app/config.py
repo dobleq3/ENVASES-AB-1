@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     MONGO_URI: str
-    PORT: int = 8005
+    PORT: int = 5000
 
     class Config:
         env_file = ".env"

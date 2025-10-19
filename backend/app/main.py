@@ -40,4 +40,4 @@ def home():
 
 # --- Mantener el servidor escuchando ---
 if __name__ == "__main__":
-    uvicorn.run("app.main:app", host="0.0.0.0", port=int(settings.PORT or 8005), reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=int(settings.PORT or 5000), reload=True)
