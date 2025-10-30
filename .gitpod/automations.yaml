@@ -14,7 +14,7 @@ tasks:
         pip install -r requirements.txt
         python -m app.main
       triggeredBy:
-        - postEnvironmentStart
+        - manual
 
   frontend:
     name: Frontend Service
@@ -43,7 +43,7 @@ tasks:
       npm install
       npm run dev
     triggeredBy:
-      - postEnvironmentStart
+      - manual
 
   grafana:
       name: Grafana
@@ -60,7 +60,7 @@ tasks:
         sudo dpkg -i grafana_10.2.3_amd64.deb
         sudo /usr/sbin/grafana-server --config=/etc/grafana/grafana.ini --homepath=/usr/share/grafana --packaging=deb
       triggeredBy:
-        - postEnvironmentStart
+        - manual
         
   hello:
     name: Hello World
