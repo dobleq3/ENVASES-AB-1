@@ -10,7 +10,7 @@ export default defineConfig({
     strictPort: true,
     cors: true,
     allowedHosts: [
-      '5173-jcjaramill-envasesab-11mnts8b81l.ws-us121.gitpod.io'
+      '5173--019a070c-0148-7818-bf32-4296457c6704.us-east-1-01.gitpod.dev'
     ],
 
   },
